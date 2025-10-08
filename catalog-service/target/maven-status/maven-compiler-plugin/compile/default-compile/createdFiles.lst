@@ -2,4 +2,4 @@ com/heitor/catalog/catalog_service/repository/ProductRepository.class
 com/heitor/catalog/catalog_service/CatalogServiceApplication.class
 com/heitor/catalog/catalog_service/model/Product.class
 com/heitor/catalog/catalog_service/service/ProductService.class
-com/heitor/catalog/catalog_service/controller/ProductController.class
+com/heitor/catalog/catalog_service/dto/ProductDTO.class

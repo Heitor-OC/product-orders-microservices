@@ -1,5 +1,5 @@
 /home/heitor/projetoSistematizacaoGC/product-orders-microservices/catalog-service/src/main/java/com/heitor/catalog/catalog_service/CatalogServiceApplication.java
-/home/heitor/projetoSistematizacaoGC/product-orders-microservices/catalog-service/src/main/java/com/heitor/catalog/catalog_service/controller/ProductController.java
+/home/heitor/projetoSistematizacaoGC/product-orders-microservices/catalog-service/src/main/java/com/heitor/catalog/catalog_service/dto/ProductDTO.java
 /home/heitor/projetoSistematizacaoGC/product-orders-microservices/catalog-service/src/main/java/com/heitor/catalog/catalog_service/model/Product.java
 /home/heitor/projetoSistematizacaoGC/product-orders-microservices/catalog-service/src/main/java/com/heitor/catalog/catalog_service/repository/ProductRepository.java
 /home/heitor/projetoSistematizacaoGC/product-orders-microservices/catalog-service/src/main/java/com/heitor/catalog/catalog_service/service/ProductService.java
