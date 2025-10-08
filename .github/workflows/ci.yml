@@ -1,0 +1,43 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout no codigo
+        uses: actions/checkout@v4
+
+      - name: configuracao JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: compilar catalog-service
+        run: |
+          cd catalog-service
+          mvn clean package -DskipTests
+
+      - name: compilar order-service
+        run: |
+          cd order-service
+          mvn clean package -DskipTests
+
+      - name: testar
+        run: |
+          cd catalog-service
+          mvn test
+          cd ../order-service
+          mvn test
