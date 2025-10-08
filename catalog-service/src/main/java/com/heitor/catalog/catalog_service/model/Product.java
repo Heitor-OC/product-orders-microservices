@@ -21,7 +21,7 @@ public class Product {
     private String description;
 
     @Column
-    private BigDecimal pricce;
+    private BigDecimal price;
 
     @Column
     private Integer stockQuantity;
