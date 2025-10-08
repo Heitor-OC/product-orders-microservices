@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,4 +38,23 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public Optional<ProductDTO> findById(UUID id) {
+        return productRepository.findById(id).map(p -> new ProductDTO(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getStockQuantity()));
+    }
+
+    public Optional<ProductDTO> update(UUID id, ProductDTO dto){
+        return productRepository.findById(id).map(p -> {
+            p.setName(dto.getName());
+            p.setDescription(dto.getDescription());
+            p.setPrice(dto.getPrice());
+            p.setStockQuantity(dto.getStockQuantity());
+            productRepository.save(p);
+            dto.setId(p.getId());
+            return dto;
+        });
+    }
+
+    public void delete(UUID id) {
+        productRepository.deleteById(id);
+    }
 }
