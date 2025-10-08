@@ -8,7 +8,7 @@
 		<version>3.5.6</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.heitor.catalog</groupId>
+	<groupId>com.heitor.catalog.catalog_service</groupId>
 	<artifactId>catalog-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>catalog-service</name>
