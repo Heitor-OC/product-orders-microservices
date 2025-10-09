@@ -8,6 +8,8 @@ import com.heitor.order.order_service.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,27 @@ public class OrderService {
 
         Order savedOrder = orderRepository.save(order);
         return toDto(savedOrder);
+    }
+
+    public List<OrderDTO> findAll() {
+        return orderRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    public OrderDTO findById(UUID id) {
+        return orderRepository.findById(id).map(this::toDto).orElse(null);
+    }
+
+    public void delete(UUID id) {
+        orderRepository.deleteById(id);
+    }
+
+    public OrderDTO update(UUID id, OrderDTO dto) {
+        return orderRepository.findById(id).map(o -> {
+            o.setStatus(dto.getStatus() != null ? dto.getStatus() : o.getStatus());
+            o.setItems(dto.getItems().stream().map(this::toEntity).collect(Collectors.toList()));
+            Order updatedOrder = orderRepository.save(o);
+            return toDto(updatedOrder);
+        }).orElse(null);
     }
 
     private OrderDTO toDto(Order order) {
