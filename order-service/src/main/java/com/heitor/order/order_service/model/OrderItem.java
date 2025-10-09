@@ -16,6 +16,6 @@ public class OrderItem {
     private UUID id;
 
     private UUID productId;
-    private IntegerValue quantity;
+    private Integer quantity;
     private BigDecimal price;
 }

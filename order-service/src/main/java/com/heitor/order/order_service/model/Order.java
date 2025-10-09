@@ -3,6 +3,7 @@ package com.heitor.order.order_service.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,9 @@ public class Order {
     @Column
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column
     private String status;
