@@ -1,0 +1,6 @@
+com/heitor/order/order_service/repository/OrderRepository.class
+com/heitor/order/order_service/dto/OrderItemDTO.class
+com/heitor/order/order_service/OrderServiceApplication.class
+com/heitor/order/order_service/model/OrderItem.class
+com/heitor/order/order_service/dto/OrderDTO.class
+com/heitor/order/order_service/model/Order.class
