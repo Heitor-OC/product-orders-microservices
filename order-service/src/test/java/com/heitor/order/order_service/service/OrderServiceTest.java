@@ -1,11 +1,11 @@
-package com.heitor.orders.order_service.service;
+package com.heitor.order.order_service.service;
 
-import com.heitor.orders.order_service.client.CatalogClient;
-import com.heitor.orders.order_service.dto.OrderDTO;
-import com.heitor.orders.order_service.dto.OrderItemDTO;
-import com.heitor.orders.order_service.dto.ProductDTO;
-import com.heitor.orders.order_service.model.Order;
-import com.heitor.orders.order_service.repository.OrderRepository;
+
+import com.heitor.order.order_service.dto.OrderDTO;
+import com.heitor.order.order_service.dto.OrderItemDTO;
+import com.heitor.order.order_service.model.Order;
+import com.heitor.order.order_service.model.OrderItem;
+import com.heitor.order.order_service.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,49 +14,59 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
-public class OrderServiceTest {
+class OrderServiceTest {
 
     @Mock
     private OrderRepository orderRepository;
 
-    @Mock
-    private CatalogClient catalogClient;
-
     @InjectMocks
     private OrderService orderService;
 
-    private ProductDTO product;
     private Order order;
+    private OrderDTO orderDTO;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
 
-        product = new ProductDTO(UUID.randomUUID(), "Notebook", "ASUS", BigDecimal.valueOf(99999.00), 10);
+        OrderItem item = new OrderItem();
+        item.setProductId(UUID.randomUUID());
+        item.setQuantity(2);
+        item.setPrice(BigDecimal.valueOf(50));
 
         order = new Order();
         order.setId(UUID.randomUUID());
         order.setStatus("CREATED");
+        order.setItems(Collections.singletonList(item));
+
+        OrderItemDTO itemDTO = new OrderItemDTO(item.getProductId(), 2, BigDecimal.valueOf(50));
+        orderDTO = new OrderDTO(order.getId(), null, "CREATED", Collections.singletonList(itemDTO));
     }
 
     @Test
-    void deveCriarPedidoComSucesso() {
-        OrderItemDTO itemDTO = new OrderItemDTO(product.getId(), 2, BigDecimal.valueOf(99999.00));
-        OrderDTO dto = new OrderDTO(null, null, null, Collections.singletonList(itemDTO));
-
-        when(catalogClient.getProductById(product.getId())).thenReturn(product);
+    void deveCriarPedido() {
         when(orderRepository.save(any(Order.class))).thenReturn(order);
 
-        OrderDTO result = orderService.create(dto);
+        OrderDTO result = orderService.create(orderDTO);
 
         assertNotNull(result);
         assertEquals("CREATED", result.getStatus());
         verify(orderRepository, times(1)).save(any(Order.class));
-        verify(catalogClient, times(1)).getProductById(product.getId());
+    }
+
+    @Test
+    void deveBuscarPedidoPorId() {
+        when(orderRepository.findById(any(UUID.class))).thenReturn(Optional.of(order));
+
+        OrderDTO result = orderService.findById(order.getId());
+        assertNotNull(result);
+        assertEquals("CREATED", result.getStatus());
     }
 }

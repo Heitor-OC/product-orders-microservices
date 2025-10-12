@@ -61,8 +61,9 @@ public class ProductServiceTest {
     void deveBuscarProdutoPorId() {
         when(productRepository.findById(any(UUID.class))).thenReturn(Optional.of(product));
 
-        ProductDTO dto = productService.findById(UUID.randomUUID());
+        Optional<ProductDTO> dto = productService.findById(UUID.randomUUID());
         assertNotNull(dto);
-        assertEquals("Notebook", dto.getName());
+        assertEquals("Notebook", dto.get().getName());
     }
+
 }
